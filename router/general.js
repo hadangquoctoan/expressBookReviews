@@ -128,19 +128,28 @@ public_users.get('/review/:isbn', function (req, res) {
 // Task 10-13 / Task 11 Coursera: Code implementation using Axios with async/await and Promises
 // ==============================================================================
 
-// Task 10: Function to get all books using async/await with Axios
+/**
+ * Task 10: Retrieve all books using async/await with Axios
+ * @param {string} url - Base URL of the API server (e.g. 'http://localhost:5000')
+ * @returns {Promise<Object>} Data object containing all books
+ */
 const getAllBooksAsync = async (url) => {
   try {
     const response = await axios.get(url);
     console.log("Task 10 (Async/Await): All books retrieved successfully");
     return response.data;
   } catch (error) {
-    console.error("Task 10 Error:", error.message);
+    console.error("Task 10 Error fetching all books:", error.message);
     throw error;
   }
 };
 
-// Task 11: Function to search by ISBN using Promises with Axios
+/**
+ * Task 11: Search book details by ISBN using Promises with Axios
+ * @param {string} url - Base URL of the API server
+ * @param {string|number} isbn - The ISBN identifier of the book
+ * @returns {Promise<Object>} Book details object
+ */
 const getBookByISBNPromise = (url, isbn) => {
   return axios.get(`${url}/isbn/${isbn}`)
     .then((response) => {
@@ -148,39 +157,103 @@ const getBookByISBNPromise = (url, isbn) => {
       return response.data;
     })
     .catch((error) => {
-      console.error(`Task 11 Error:`, error.message);
+      console.error(`Task 11 Error fetching book by ISBN ${isbn}:`, error.message);
       throw error;
     });
 };
 
-// Task 12: Function to search by Author using Promises with Axios
+/**
+ * Task 11 (Alternative): Search book details by ISBN using async/await with Axios
+ * @param {string} url - Base URL of the API server
+ * @param {string|number} isbn - The ISBN identifier of the book
+ * @returns {Promise<Object>} Book details object
+ */
+const getBookByISBNAsync = async (url, isbn) => {
+  try {
+    const response = await axios.get(`${url}/isbn/${isbn}`);
+    console.log(`Task 11 (Async/Await): Book with ISBN ${isbn} retrieved successfully`);
+    return response.data;
+  } catch (error) {
+    console.error(`Task 11 Error fetching book by ISBN ${isbn}:`, error.message);
+    throw error;
+  }
+};
+
+/**
+ * Task 12: Search book details by Author using Promises with Axios
+ * @param {string} url - Base URL of the API server
+ * @param {string} author - Author name to search for
+ * @returns {Promise<Array>} List of books by the author
+ */
 const getBooksByAuthorPromise = (url, author) => {
   return axios.get(`${url}/author/${encodeURIComponent(author)}`)
     .then((response) => {
-      console.log(`Task 12 (Promise): Books by author ${author} retrieved successfully`);
+      console.log(`Task 12 (Promise): Books by author "${author}" retrieved successfully`);
       return response.data;
     })
     .catch((error) => {
-      console.error(`Task 12 Error:`, error.message);
+      console.error(`Task 12 Error fetching books by author "${author}":`, error.message);
       throw error;
     });
 };
 
-// Task 13: Function to search by Title using Promises with Axios
+/**
+ * Task 12 (Alternative): Search book details by Author using async/await with Axios
+ * @param {string} url - Base URL of the API server
+ * @param {string} author - Author name to search for
+ * @returns {Promise<Array>} List of books by the author
+ */
+const getBooksByAuthorAsync = async (url, author) => {
+  try {
+    const response = await axios.get(`${url}/author/${encodeURIComponent(author)}`);
+    console.log(`Task 12 (Async/Await): Books by author "${author}" retrieved successfully`);
+    return response.data;
+  } catch (error) {
+    console.error(`Task 12 Error fetching books by author "${author}":`, error.message);
+    throw error;
+  }
+};
+
+/**
+ * Task 13: Search book details by Title using Promises with Axios
+ * @param {string} url - Base URL of the API server
+ * @param {string} title - Book title to search for
+ * @returns {Promise<Array>} List of books matching the title
+ */
 const getBooksByTitlePromise = (url, title) => {
   return axios.get(`${url}/title/${encodeURIComponent(title)}`)
     .then((response) => {
-      console.log(`Task 13 (Promise): Books with title ${title} retrieved successfully`);
+      console.log(`Task 13 (Promise): Books with title "${title}" retrieved successfully`);
       return response.data;
     })
     .catch((error) => {
-      console.error(`Task 13 Error:`, error.message);
+      console.error(`Task 13 Error fetching books with title "${title}":`, error.message);
       throw error;
     });
+};
+
+/**
+ * Task 13 (Alternative): Search book details by Title using async/await with Axios
+ * @param {string} url - Base URL of the API server
+ * @param {string} title - Book title to search for
+ * @returns {Promise<Array>} List of books matching the title
+ */
+const getBooksByTitleAsync = async (url, title) => {
+  try {
+    const response = await axios.get(`${url}/title/${encodeURIComponent(title)}`);
+    console.log(`Task 13 (Async/Await): Books with title "${title}" retrieved successfully`);
+    return response.data;
+  } catch (error) {
+    console.error(`Task 13 Error fetching books with title "${title}":`, error.message);
+    throw error;
+  }
 };
 
 module.exports.general = public_users;
 module.exports.getAllBooksAsync = getAllBooksAsync;
 module.exports.getBookByISBNPromise = getBookByISBNPromise;
+module.exports.getBookByISBNAsync = getBookByISBNAsync;
 module.exports.getBooksByAuthorPromise = getBooksByAuthorPromise;
+module.exports.getBooksByAuthorAsync = getBooksByAuthorAsync;
 module.exports.getBooksByTitlePromise = getBooksByTitlePromise;
+module.exports.getBooksByTitleAsync = getBooksByTitleAsync;
